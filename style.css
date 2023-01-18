@@ -1,0 +1,21 @@
+body {
+    margin: 0;
+    background-color: #111;
+}
+
+#notificator {
+    box-sizing: border-box;
+    width: 100px;
+    height: 100px;
+    position: absolute;
+}
+
+#rewardImage {
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 1s;
+}

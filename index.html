@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Sounds On Awards</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <script src="./reconnecting-websocket.min.js"></script>
+    <script src="./PubSub.js"></script>
+    <script src="./config.js"></script>
+</head>
+
+<body>
+    <div id="notificator">
+        <img id="rewardImage" src="">
+    </div>
+    <script>
+        const PubSub = new TwitchPubSub(config.channelInfo.id, config.channelInfo.name);
+
+        PubSub.addEventListener("reward-redeemed", {
+            handleEvent: (ev) => {
+                let redemption = ev.data.redemption;
+                let reward = redemption.reward;
+
+                console.log(redemption);
+                console.log("Reward ID:", reward.id);
+
+                let sound = config.sounds[reward.id];
+                if(!sound) return;
+
+                let imageUrl = reward.image ? reward.image.url_4x : reward.default_image.url_4x;
+
+                let rewardImage = document.getElementById("rewardImage");
+
+                rewardImage.style.opacity = 1;
+                rewardImage.src = imageUrl;
+
+                let audio = new Audio("sounds/" + sound);
+                audio.play();
+                audio.addEventListener("ended", () => { 
+                    rewardImage.style.opacity = 0;
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
